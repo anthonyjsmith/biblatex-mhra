@@ -1,4 +1,37 @@
 \ProvidesFile{mhra.bbx}[2011/11/6 v0.1 biblatex bibliography style]
 
 \RequireBibliographyStyle{verbose-ibid}
+\renewbibmacro{in:}{}
+
+\renewbibmacro*{publisher+location+date}{%
+  \space%
+  \mkbibparens{%
+    \setunit*{\addspace}%
+    \printlist{location}%
+    \setunit*{\addcolon\space}%
+    \iflistundef{publisher}
+      {\setunit*{\addcomma\space}}
+      {\setunit*{\addcolon\space}}%
+    \printlist{publisher}%
+    \setunit*{\addcomma\space}%
+    \usebibmacro{date}%
+  \newunit}}
+
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addspace}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \setunit{\addspace}%     
+  \addcomma%
+  \usebibmacro{volume+number+eid}%
+  \setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue}%
+  \newunit}
+
 \endinput

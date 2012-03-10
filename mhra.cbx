@@ -1,131 +1,40 @@
 \ProvidesFile{mhra.cbx}[$Id: 2011/11/6 v0.1 mhra biblatex citation style$]
 
-%\RequireCitationStyle{verbose-ibid}
+\RequireCitationStyle{authortitle-ibid}
 
 \ExecuteBibliographyOptions{citetracker=context,ibidtracker=constrict,
-                            pagetracker,autocite=footnote}
+                            pagetracker, autocite=footnote}
+
+\DeclareLabelname[book]{author,editor,translator}
+
+\newtoggle{cbx:loccit}
+\newbibmacro*{cite:full:citepages}{}
+\newbibmacro*{cite:postnote}{}
 
 \renewcommand*{\newunitpunct}{\addcomma\addspace}
+\renewbibmacro{in:}{}
+\renewbibmacro*{cite:citepages}{}
 
-%\DeclareListAlias{origpublisher}{publisher}
-
-\DeclareFieldFormat[book]{title}{\mkbibemph{#1}}
-\DeclareFieldFormat{edition}{#1\addspace\bibstring{edn}\isdot}
-\DeclareFieldFormat{volume}{#1\addspace\bibstring{vol}\isdot}
-\DeclareFieldFormat{series}{#1}
-\DeclareFieldFormat{volumes}{\textsc #1}
-\DeclareFieldFormat{pages}{\mkpageprefix[bookpagination]{#1}}
-\DeclareFieldFormat{postnote}{\mkpageprefix[pagination]{#1}}
-\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
-
-\DeclareFieldFormat[article]{postnote}{\printtext{#1}}
-\DeclareFieldFormat[article,incollection]{title}{`\printtext{#1}'}
-\DeclareFieldFormat[incollection]{booktitle}{\printtext{\mkbibemph{#1}}}
-
-\DeclareBibliographyDriver{book}{
-  \printnames[first-last]{author}
-}
-
-\newbibmacro*{cite:short}{%
-  \printnames{labelname}%
-  \setunit*{\nametitledelim}%
-  \printtext[bibhyperlink]{%
-    \printfield[citetitle]{labeltitle}}
-  \newunit\newblock
-  \printfield{postnote}
-}
-
-\newbibmacro*{publisher-details}{%
-  \unspace
-  \printtext{
-    \mkbibparens{
-      \unspace
-      \printlist{location}
-      \addcolon\addspace
-      \printlist{publisher}
-      \addcomma\addspace
-      \printfield{year}}
-  }
-}
-
-\DeclareBibliographyDriver{book}{%
-  \printnames[first-last]{author}
-  \newunit\newblock
-  \printfield{title}
-  \newunit\newblock
-  \usebibmacro{editor+others}
-  \newunit\newblock
-  \iffieldundef{series}{\unspace}{
-    \printfield{series}
-    }
-  \newunit\newblock
-  \iffieldundef{edition}{\unspace}{
-    \printfield{edition}
-    }
-  \newunit\newblock
-  \iffieldundef{volumes}{\unspace}{
-    \printfield{volumes}
-  }
-  \setunit*{\addspace}\newblock
-  \usebibmacro{publisher-details}
-  \newunit\newblock
-  \iffieldundef{volumes}{\unspace}{
-    \printfield{volumes}
-  }
-  \printfield{postnote}
-}
-
-\DeclareBibliographyDriver{article}{%
-  \printnames[first-last]{author}
-  \newunit\newblock
-  \printfield{title}
-  \newunit\newblock
-  \printfield{journaltitle}
-  \newunit\newblock
-  \iffieldundef{series}{\unspace}{
-    \printfield{series}
-    }
-  \newunit\newblock
-  \printfield{volume}
-  \newunit\newblock
-  \printtext{\mkbibparens{\printfield{year}}}
-  \newunit\newblock
-  \printfield{postnote}
-}
-
-\DeclareBibliographyDriver{incollection}{%
-  \printnames[first-last]{author}
-  \newunit\newblock
-  \printfield{title}
-  \setunit{\bibstring{in}\addspace}\newblock
-  \printfield{booktitle}
-  \newunit\newblock
-  \usebibmacro{editor+others}
-  \setunit*{\addspace}\newblock
-  \usebibmacro{publisher-details}
-  \newunit\newblock
-  \printfield{postnote}
-}
-
-\DeclareCiteCommand{\cite}{}{%
-  \ifciteseen {
-    \usebibmacro{cite:short}
-  }{
+\newbibmacro*{cite:full}{%
+  \usebibmacro{cite:full:citepages}%
+  \printtext[bibhypertarget]{%
     \usedriver
-        {{\DeclareNameAlias{sortname}{default}}}
-        {\thefield{entrytype}}%
-  }
-}{\multicitedelim}{}
+      {\DeclareNameAlias{sortname}{default}}
+      {\thefield{entrytype}}}%
+  \usebibmacro{shorthandintro}}
 
-\DeclareCiteCommand{\footcite}[\mkbibfootnote]{}{%
-  \ifciteseen {
-    \usebibmacro{cite:short}
-  }{
-    \usedriver
-        {{\DeclareNameAlias{sortname}{default}}}
-        {\thefield{entrytype}}%
-  }
-}{\multicitedelim}{}
+\renewbibmacro*{cite}{%
+  \ifciteseen
+    {\iffieldundef{shorthand}
+       {\ifboolexpr{
+          test {\ifciteibid}
+	  and
+	  not test {\iffirstonpage}
+        }
+          {\usebibmacro{cite:ibid}}
+          {\usebibmacro{cite:short}}}
+       {\usebibmacro{cite:shorthand}}}
+    {\usebibmacro{cite:full}}}
 
 
 \endinput
