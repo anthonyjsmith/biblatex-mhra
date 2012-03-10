@@ -4,9 +4,9 @@
 \renewbibmacro{in:}{}
 
 \renewbibmacro*{publisher+location+date}{%
-  \space%
+  \addspace%
+  \setunit{}%
   \mkbibparens{%
-    \setunit*{\addspace}%
     \printlist{location}%
     \setunit*{\addcolon\space}%
     \iflistundef{publisher}

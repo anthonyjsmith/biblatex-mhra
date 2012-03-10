@@ -1,21 +1,17 @@
 \ProvidesFile{mhra.cbx}[$Id: 2011/11/6 v0.1 mhra biblatex citation style$]
 
-\RequireCitationStyle{authortitle-ibid}
+\RequireCitationStyle{verbose-ibid}
 
 \ExecuteBibliographyOptions{citetracker=context,ibidtracker=constrict,
                             pagetracker, autocite=footnote}
 
 \DeclareLabelname[book]{author,editor,translator}
 
-\newtoggle{cbx:loccit}
-\newbibmacro*{cite:full:citepages}{}
-\newbibmacro*{cite:postnote}{}
-
 \renewcommand*{\newunitpunct}{\addcomma\addspace}
 \renewbibmacro{in:}{}
 \renewbibmacro*{cite:citepages}{}
 
-\newbibmacro*{cite:full}{%
+\renewbibmacro*{cite:full}{%
   \usebibmacro{cite:full:citepages}%
   \printtext[bibhypertarget]{%
     \usedriver
