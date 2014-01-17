@@ -5,7 +5,11 @@
 \ExecuteBibliographyOptions{citetracker=context,ibidtracker=constrict,
                             pagetracker, autocite=footnote}
 
-\DeclareLabelname[book]{author,editor,translator}
+\DeclareLabelname[book]{%
+  \field{author}
+  \field{editor}
+  \field{translator}
+}
 
 \renewcommand*{\newunitpunct}{\addcomma\addspace}
 \renewbibmacro{in:}{}
