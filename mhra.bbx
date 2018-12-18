@@ -1,20 +1,21 @@
 \ProvidesFile{mhra.bbx}[2011/11/6 v0.1 biblatex bibliography style]
 
-% AJS - see /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/bbx/verbose-ibid.bbx
-%        -> /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/bbx/authortitle.bbx
-%        -> /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-%           /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/biblatex.def
+%       see /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/verbose-ibid.bbx
+%        -> /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/authortitle.bbx
+%        -> /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+%           /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
 \RequireBibliographyStyle{verbose-ibid}
 \renewbibmacro{in:}{}
 
-% AJS - custom strings
+% Custom strings
 \DeclareLanguageMapping{british}{british-mhra}
 
-% AJS - fix to add page number ({#1}) and parentheses
-% AJS - TODO: remove the comma , (pp. 1--2) (try extpostnotedelim)
+% TODO: Fix to add page number ({#1}) and parentheses (but no parentheses for subsequent references)
+%       remove the comma , (pp. 1--2) (try extpostnotedelim)
+%       for now, use \footnote{\cite{ref} (pp.\ 1--2).}
 %\DeclareFieldFormat[article,incollection]{postnote}{\mkbibparens{\mkpageprefix[pagination]{#1}}}
 
-% AJS - Don't show pp. before page numbers for article (MHRA)
+% Don't show pp. before page numbers for article
 \DeclareFieldFormat[article]{pages}{{#1}}
 
 \renewbibmacro*{publisher+location+date}{%
@@ -92,7 +93,7 @@
   \usebibmacro{pageref}%
   \usebibmacro{finentry}}
 
-% AJS - incollectionshort - Hack to not include publisher+location+date (use booktitle + editor)
+% incollectionshort - Hack to not include publisher+location+date (use booktitle + editor)
 \DeclareFieldFormat[incollectionshort]{title}{\mkbibquote{#1\isdot}}
 \DeclareFieldFormat[incollectionshort]{citetitle}{\mkbibquote{#1\isdot}}
 \DeclareBibliographyDriver{incollectionshort}{%
@@ -126,12 +127,14 @@
   \usebibmacro{pageref}%
   \usebibmacro{finentry}}
 
-% AJS - online - adapted from standard.bbx
+% online - adapted from standard.bbx
+% title in quotes
 \DeclareFieldFormat[online]{title}{\mkbibquote{#1\isdot}}
-% AJS - urls in angle brackets, in normal format using \StrSubstitute from xtring package (line breaks)
+% urls in angle brackets, in normal format using \StrSubstitute from xtring package (line breaks)
 \DeclareFieldFormat{url}{\href{#1}{\printtext{<}\StrSubstitute{#1}{/}{\slash}}\printtext{>}}
-% AJS - square brackets for seen date
+% square brackets for seen date
 \DeclareFieldFormat{urldate}{\mkbibbrackets{\bibstring{urlseen}\space#1}}
+% no date
 \DeclareBibliographyDriver{online}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
@@ -151,9 +154,6 @@
   \newunit\newblock
   \printlist{organization}%
   \newunit\newblock
-  % AJS - no date (MHRA)
-%  \usebibmacro{date}%
-%  \newunit\newblock
   \iftoggle{bbx:eprint}
     {\usebibmacro{eprint}}
     {}%

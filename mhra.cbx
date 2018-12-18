@@ -1,14 +1,15 @@
 \ProvidesFile{mhra.cbx}[$Id: 2011/11/6 v0.1 mhra biblatex citation style$]
 
-% AJS - see /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/cbx/verbose-ibid.cbx
+%       see /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/verbose-ibid.cbx
 \RequireCitationStyle{verbose-ibid}
 
-% AJS - custom strings
+% Custom strings
 \DeclareLanguageMapping{british}{british-mhra}
 
+% Long format for URL date
 \ExecuteBibliographyOptions{citetracker=context,ibidtracker=constrict,
                             pagetracker, autocite=footnote,
-                            urldate=long} % AJS
+                            urldate=long}
 
 \DeclareLabelname[book]{%
   \field{author}
@@ -40,6 +41,5 @@
           {\usebibmacro{cite:short}}}
        {\usebibmacro{cite:shorthand}}}
     {\usebibmacro{cite:full}}}
-
 
 \endinput
