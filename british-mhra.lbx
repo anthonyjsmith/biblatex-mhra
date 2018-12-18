@@ -1,0 +1,39 @@
+\ProvidesFile{british-mhra.lbx}[2008/10/01 v1.0 biblatex localization]
+\InheritBibliographyExtras{british}
+
+\DeclareBibliographyStrings{%
+  inherit          = {british},
+  andothers        = {{and\addabbrvspace others}{and\addabbrvspace others}},
+  % Don't abbreviate month names
+  january          = {{January}{January}},
+  february         = {{February}{February}},
+  march            = {{March}{March}},
+  april            = {{April}{April}},
+  may              = {{May}{May}},
+  june             = {{June}{June}},
+  july             = {{July}{July}},
+  august           = {{August}{August}},
+  september        = {{September}{September}},
+  october          = {{October}{October}},
+  november         = {{November}{November}},
+  december         = {{December}{December}},
+  urlseen          = {{accessed on}{accessed on}},
+}
+
+% Cardinal number for date
+\DeclareBibliographyExtras{%
+  \protected\def\mkbibdatelong#1#2#3{%
+    \iffieldundef{#3}
+      {}
+      {\thefield{#3}%
+       \iffieldundef{#2}{}{\nobreakspace}}%
+    \iffieldundef{#2}
+      {}
+      {\mkbibmonth{\thefield{#2}}%
+       \iffieldundef{#1}{}{\space}}%
+    \iffieldbibstring{#1}
+      {\bibstring{\thefield{#1}}}
+      {\dateeraprintpre{#1}\stripzeros{\thefield{#1}}}}%
+}
+
+\endinput

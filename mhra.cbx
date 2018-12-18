@@ -1,9 +1,14 @@
 \ProvidesFile{mhra.cbx}[$Id: 2011/11/6 v0.1 mhra biblatex citation style$]
 
+% AJS - see /usr/local/texlive/2017/texmf-dist/tex/latex/biblatex/cbx/verbose-ibid.cbx
 \RequireCitationStyle{verbose-ibid}
 
+% AJS - custom strings
+\DeclareLanguageMapping{british}{british-mhra}
+
 \ExecuteBibliographyOptions{citetracker=context,ibidtracker=constrict,
-                            pagetracker, autocite=footnote}
+                            pagetracker, autocite=footnote,
+                            urldate=long} % AJS
 
 \DeclareLabelname[book]{%
   \field{author}
@@ -28,8 +33,8 @@
     {\iffieldundef{shorthand}
        {\ifboolexpr{
           test {\ifciteibid}
-	  and
-	  not test {\iffirstonpage}
+         and
+         not test {\iffirstonpage}
         }
           {\usebibmacro{cite:ibid}}
           {\usebibmacro{cite:short}}}
