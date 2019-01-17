@@ -5,7 +5,6 @@
 %        -> /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 %           /usr/local/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
 \RequireBibliographyStyle{verbose-ibid}
-\renewbibmacro{in:}{}
 
 % Custom strings
 \DeclareLanguageMapping{british}{british-mhra}
@@ -60,7 +59,7 @@
   \newunit\newblock
   \usebibmacro{byauthor}%
   \newunit\newblock
-  \printtext{in\addspace}%
+  \usebibmacro{in:}%
   \usebibmacro{maintitle+booktitle}%
   \newunit\newblock
   \usebibmacro{byeditor+others}%
@@ -169,5 +168,61 @@
      \usebibmacro{related}}
     {}%
   \usebibmacro{finentry}}
+
+% inbook, adapted from standard.bbc
+% don't show comma if bookauthor is same as author
+\DeclareBibliographyDriver{inbook}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/translator+others}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{in:}%
+  \usebibmacro{bybookauthor}%
+  \ifnamesequal{author}{bookauthor}
+    {}
+    {\newunit\newblock}%
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
 
 \endinput
