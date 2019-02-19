@@ -18,11 +18,14 @@
 }
 
 \renewcommand*{\newunitpunct}{\addcomma\addspace}
-% "in" rather than "in:", and don't display for articles
+% "in " rather than "in: ", and don't display for articles
+\renewcommand*{\intitlepunct}{\space}
 \renewbibmacro{in:}{%
   \iffieldequalstr{entrytype}{article}
     {}
-    {\printtext{\bibstring{in}}}}
+    {%
+      \printtext{%
+        \bibstring{in}\intitlepunct}}}
 \renewbibmacro*{cite:citepages}{}
 
 \renewbibmacro*{cite:full}{%
