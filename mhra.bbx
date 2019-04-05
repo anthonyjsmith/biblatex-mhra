@@ -48,6 +48,18 @@
   \usebibmacro{issue}%
   \newunit}
 
+% For newspapers (no volume number), do not put the date in parentheses
+\newbibmacro*{issue+date}{%
+  \iffieldundef{volume}
+    {\printfield{issue}%
+     \setunit*{\addspace}%
+     \usebibmacro{date}}
+    {\printtext[parens]{%
+      \printfield{issue}%
+      \setunit*{\addspace}%
+      \usebibmacro{date}}}%
+  \newunit}
+
 \DeclareBibliographyDriver{incollection}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
