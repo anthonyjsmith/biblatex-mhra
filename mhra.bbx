@@ -14,8 +14,11 @@
 %       for now, use \footnote{\cite{ref} (pp.\ 1--2).}
 %\DeclareFieldFormat[article,incollection]{postnote}{\mkbibparens{\mkpageprefix[pagination]{#1}}}
 
-% Don't show pp. before page numbers for article
-\DeclareFieldFormat[article]{pages}{{#1}}
+% Don't show pp. before page numbers for article, except for newspapers (no volume number)
+\DeclareFieldFormat[article]{pages}{%
+  \iffieldundef{volume}
+    {\mkpageprefix[bookpagination]{#1}}
+    {#1}}
 
 \renewbibmacro*{publisher+location+date}{%
   \addspace%
@@ -49,7 +52,7 @@
   \newunit}
 
 % For newspapers (no volume number), do not put the date in parentheses
-\newbibmacro*{issue+date}{%
+\renewbibmacro*{issue+date}{%
   \iffieldundef{volume}
     {\printfield{issue}%
      \setunit*{\addspace}%
