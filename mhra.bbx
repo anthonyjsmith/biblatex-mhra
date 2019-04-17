@@ -181,7 +181,7 @@
     {}%
   \usebibmacro{finentry}}
 
-% inbook, adapted from standard.bbc
+% inbook, adapted from standard.bbx
 % don't show comma if bookauthor is same as author
 \DeclareBibliographyDriver{inbook}{%
   \usebibmacro{bibindex}%
@@ -236,8 +236,10 @@
     {}%
   \usebibmacro{finentry}}
 
-% bookinbookshort - Hack to not include publisher+location+date (use booktitle + bookauthor)
-\DeclareBibliographyDriver{bookinbookshort}{%
+% inbookshort - Hack to not include publisher+location+date (use booktitle + bookauthor)
+\DeclareFieldFormat[inbookshort]{title}{\mkbibquote{#1\isdot}}
+\DeclareFieldFormat[inbookshort]{citetitle}{\mkbibquote{#1\isdot}}
+\DeclareBibliographyDriver{inbookshort}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
@@ -288,5 +290,7 @@
     {}%
   \usebibmacro{finentry}}
 
+% NB: DeclareFieldFormat above doesn't apply to bookinbookshort, so title will be in italics
+\DeclareBibliographyAlias{bookinbookshort}{inbookshort}
 
 \endinput
